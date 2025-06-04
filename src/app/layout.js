@@ -10,6 +10,7 @@ import {
 } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes"
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,21 +39,13 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <header className="flex justify-end items-center p-4 gap-4 h-16">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
           <ThemeProvider
              attribute="class"
              defaultTheme="system"
              enableSystem
              disableTransitionOnChange
           >
+            <Header />
             <main className=" min-h-screen">{children}</main>
 
             <footer className="bg-muted/50 py-12">
