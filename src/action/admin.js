@@ -4,7 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 
 import { revalidatePath } from "next/cache";
 
-export async function getVerifyAdmin(params) {
+export async function getVerifyAdmin() {
   const { userId } = await auth();
   if (!userId) {
     throw new Error("unauthorized persons");
