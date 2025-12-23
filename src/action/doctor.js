@@ -1,6 +1,6 @@
 "use server";
 
-import db from "@/lib/data/prisma";
+import { db } from "@/lib/data/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
@@ -112,9 +112,9 @@ export async function getDoctorAppointments() {
   try {
     const doctor = await db.user.findUnique({
       where: {
-        clerkUserId: doctorId,
+        clerkUserId: userId,
         role: 'DOCTOR'
-           }
+      }
     })
 
     if (!doctor) {
@@ -127,16 +127,16 @@ export async function getDoctorAppointments() {
         status: {
           in: ['SCHEDULED']
         }
-      }, 
+      },
       include: {
         patient: true
-      }, 
+      },
       orderBy: {
         startTime: 'asc'
       }
     })
 
-    return {appointments}
+    return { appointments }
   } catch (error) {
     throw new Error("Failed to fetch appointments " + error.message);
   }
@@ -151,102 +151,102 @@ export async function cancelAppointment(formData) {
   }
 
 
- try {
-   const user = await db.user.findUnique({
-     where: {
-       clerkUserId: userId
-     }
-   })
- 
-   if (!user) {
-     throw new Error("User not found");
-   }
-   const appointmentId = formData.get("appointmentId");
- 
-   if (!appointmentId) {
-     throw new Error("Appointment ID is required");
-   }
- 
-   //  findUnique to appointement data  to include methods patinet and doctor
-   const appointments = await db.appointment.findUnique({
-     where: {
-          id: appointmentId
-     },
-     include: {
-       patient: true,
-       doctor: true
-     }
-      })
- 
-   if (!appointments) {
-     throw new Error("Appointment not found");
-   }
- 
-   // Verify the user is either the doctor or the patient for this appointment
-   if (appointment.doctorId !== user.id && appointment.patientId !== user.id) {
-     throw new Error("You are not authorized to cancel this appointment");
-   }
- 
-   // Perform cancellation in a transaction with update to data status : 'CANCELLED' and then to create creditTransaction patientid and doctor
-
-   await db.$transaction(async (tx) => {
-     await tx.appointment.update({
-       where: {
-        id: appointmentId
-       },
-       data: {
-        status: "CANCELLED",
-      },
-     })
-
-     await tx.creditTransaction.create({
-      data: {
-        userId: appointment.patientId,
-        amount: 2,
-        type: "APPOINTMENT_DEDUCTION",
-      },
-     });
-     
-     await tx.creditTransaction.create({
-       data: {
-         userId: appointment.doctorId,
-         amount: -2,
-         type: "APPOINTMENT_DEDUCTION"
-       }
-     })
-
-     await tx.user.update({
-       where: {
-         id: appointment.patientId
-       },
-       data: {
-         credits: {
-            increment: 2,
-         }
-       }
-     })
-
-     await tx.user.update ({
-       where: {
-         id: appointment.doctorId
-       },
-       data: {
-        credits: {
-          decrement: 2,
-        }
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        clerkUserId: userId
       }
-     })
-   })
-   // // Update patient's credit balance (increment)
-   //  // Update doctor's credit balance (decrement)
-   // Determine which path to revalidate based on user role
-   if (user.role === "DOCTOR") {
-     revalidatePath("/doctor");
-   } else if (user.role === "PATIENT") {
-     revalidatePath("/appointments");
-     }
-     
- } catch (error) {
+    })
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const appointmentId = formData.get("appointmentId");
+
+    if (!appointmentId) {
+      throw new Error("Appointment ID is required");
+    }
+
+    //  findUnique to appointement data  to include methods patinet and doctor
+    const appointments = await db.appointment.findUnique({
+      where: {
+        id: appointmentId
+      },
+      include: {
+        patient: true,
+        doctor: true
+      }
+    })
+
+    if (!appointments) {
+      throw new Error("Appointment not found");
+    }
+
+    // Verify the user is either the doctor or the patient for this appointment
+    if (appointment.doctorId !== user.id && appointment.patientId !== user.id) {
+      throw new Error("You are not authorized to cancel this appointment");
+    }
+
+    // Perform cancellation in a transaction with update to data status : 'CANCELLED' and then to create creditTransaction patientid and doctor
+
+    await db.$transaction(async (tx) => {
+      await tx.appointment.update({
+        where: {
+          id: appointmentId
+        },
+        data: {
+          status: "CANCELLED",
+        },
+      })
+
+      await tx.creditTransaction.create({
+        data: {
+          userId: appointment.patientId,
+          amount: 2,
+          type: "APPOINTMENT_DEDUCTION",
+        },
+      });
+
+      await tx.creditTransaction.create({
+        data: {
+          userId: appointment.doctorId,
+          amount: -2,
+          type: "APPOINTMENT_DEDUCTION"
+        }
+      })
+
+      await tx.user.update({
+        where: {
+          id: appointment.patientId
+        },
+        data: {
+          credits: {
+            increment: 2,
+          }
+        }
+      })
+
+      await tx.user.update({
+        where: {
+          id: appointment.doctorId
+        },
+        data: {
+          credits: {
+            decrement: 2,
+          }
+        }
+      })
+    })
+    // // Update patient's credit balance (increment)
+    //  // Update doctor's credit balance (decrement)
+    // Determine which path to revalidate based on user role
+    if (user.role === "DOCTOR") {
+      revalidatePath("/doctor");
+    } else if (user.role === "PATIENT") {
+      revalidatePath("/appointments");
+    }
+
+  } catch (error) {
     console.error("Failed to cancel appointment:", error);
     throw new Error("Failed to cancel appointment: " + error.message);
   }
@@ -300,11 +300,11 @@ export async function addAppointmentNotes(formData) {
     console.error("Failed to add appointment notes:", error);
     throw new Error("Failed to update notes: " + error.message);
   }
-    // check userid by auth() and findUique to appoint dactor 
-    // to formdata get appointmentId and notes 
-   
-    // findunique to appointment and check appointment
-    // // Update the appointment notes
+  // check userid by auth() and findUique to appoint dactor 
+  // to formdata get appointmentId and notes 
+
+  // findunique to appointment and check appointment
+  // // Update the appointment notes
 }
 export async function markAppointmentCompleted(formData) {
   // check userid by auth()
@@ -336,7 +336,7 @@ export async function markAppointmentCompleted(formData) {
       where: {
         id: appointmentId,
         doctorId: doctor.id
-      }, 
+      },
       include: {
         patient: true
       }

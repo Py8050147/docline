@@ -1,89 +1,96 @@
-import React from 'react'
-import { format } from "date-fns"
-import { useState, useEffect } from 'react'
-import { Button } from '../../@/components/ui/button'
-import { Textarea } from '../../@/components/ui/textarea'
-import { Card, CardContent } from '../../@/components/ui/card'
-import { Calendar, Clock, User, Video, X, Stethoscope, Edit, Loader2, CheckCircle } from "lucide-react"
-import { Badge } from '../../@/components/ui/badge'
+import React from "react";
+import { format } from "date-fns";
+import { useState, useEffect } from "react";
+import { Button } from "../../@/components/ui/button";
+import { Textarea } from "../../@/components/ui/textarea";
+import { Card, CardContent } from "../../@/components/ui/card";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '../../@/components/ui/dialog'
- import { 
-    cancelAppointment, 
-    markAppointmentCompleted, 
-    addAppointmentNotes
-} from '@/action/doctor'
-import { generateVideoToken } from "@/actions/appointments";
+  Calendar,
+  Clock,
+  User,
+  Video,
+  X,
+  Stethoscope,
+  Edit,
+  Loader2,
+  CheckCircle,
+} from "lucide-react";
+import { Badge } from "../../@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../@/components/ui/dialog";
+import {
+  cancelAppointment,
+  markAppointmentCompleted,
+  addAppointmentNotes,
+} from "@/action/doctor";
+import { generateVideoToken } from "@/action/appointment";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useEmailLink } from '@clerk/nextjs'
- 
-
+import { useEmailLink } from "@clerk/nextjs";
 
 export function Appointmentcard({
   appointment,
   userRole,
   refetchAppointments,
 }) {
-  const [open, setOpen] = useState(false)
-  const [action, setAction] = useState(null)
-  const [notes, setNotes] = useState(appointment.notes || "")
-  const router = useRouter()
-  
+  const [open, setOpen] = useState(false);
+  const [action, setAction] = useState(null);
+  const [notes, setNotes] = useState(appointment.notes || "");
+  const router = useRouter();
+
   const {
     loading: cancelLoading,
     fn: submitCancel,
     data: cancelData,
-  } = useFetch(cancelAppointment)
+  } = useFetch(cancelAppointment);
 
   const {
     loading: notesLoading,
     fn: submitNotes,
-    data: notesData
-  } = useFetch(addAppointmentNotes)
+    data: notesData,
+  } = useFetch(addAppointmentNotes);
   const {
     loading: tokenLoading,
     fn: submitTokenRequest,
     data: tokenData,
-  } = useFetch(generateVideoToken)
+  } = useFetch(generateVideoToken);
   const {
     loading: completeLoading,
     fn: submitMarkCompleted,
-    data: completeData, 
-
-  } = useFetch(markAppointmentCompleted)
+    data: completeData,
+  } = useFetch(markAppointmentCompleted);
 
   const formatDateTime = (dateString) => {
     try {
-      return format(new Date(dateString), "MMMM d, yyyy 'at' h:mm a ")
+      return format(new Date(dateString), "MMMM d, yyyy 'at' h:mm a ");
     } catch (e) {
-      return "inValid Date"
+      return "inValid Date";
     }
-  }
+  };
 
   const formatTime = (dateString) => {
     try {
-      return format(new Date(dateString), " h:mm a ")
+      return format(new Date(dateString), " h:mm a ");
     } catch (e) {
-      return "inValid time"
+      return "inValid time";
     }
-  }
+  };
 
   const canMarkCompleted = () => {
-    if (userRole === 'DOCTOR' || appointment.status === 'SCHEDULED') {
-      return false
+    if (userRole === "DOCTOR" || appointment.status === "SCHEDULED") {
+      return false;
     }
-    const now = new Date()
-    const appointmentEndTime = new Date(appointment.endTime)
-    return now >= appointmentEndTime
-  }
+    const now = new Date();
+    const appointmentEndTime = new Date(appointment.endTime);
+    return now >= appointmentEndTime;
+  };
 
   const handleCancelAppointment = async () => {
     if (cancelLoading) return;
@@ -123,58 +130,57 @@ export function Appointmentcard({
     }
   };
 
-  const handleSaveNotes = async() => {
-    if (notesLoading || userRole !== 'DOCTOR') return
-    const formData = new FormData()
-    formData.append('appointmentId', appointment.id)
-    formData.append('notes', notes)
-    await submitNotes(formData)
-  }
+  const handleSaveNotes = async () => {
+    if (notesLoading || userRole !== "DOCTOR") return;
+    const formData = new FormData();
+    formData.append("appointmentId", appointment.id);
+    formData.append("notes", notes);
+    await submitNotes(formData);
+  };
 
   const handleJoinVideoCall = async () => {
-    setAction('video')
-   
-    const formData = new FormData()
-    formData.append('appointmentId', appointment.id)
+    setAction("video");
 
-    await submitTokenRequest(formData)
+    const formData = new FormData();
+    formData.append("appointmentId", appointment.id);
 
-  }
+    await submitTokenRequest(formData);
+  };
 
   useEffect(() => {
     if (cancelData?.success) {
-      toast.success('Appointment Cancelled Successfully')
+      toast.success("Appointment Cancelled Successfully");
       if (refetchAppointments) {
-        refetchAppointments()
+        refetchAppointments();
       } else {
-        router.refresh()
+        router.refresh();
       }
     }
-  }, [router, refetchAppointments, cancelData])
+  }, [router, refetchAppointments, cancelData]);
 
   useEffect(() => {
     if (completeData?.success) {
-      toast.success('Appointment marked as  Successfully')
-      setOpen(false)
+      toast.success("Appointment marked as  Successfully");
+      setOpen(false);
       if (refetchAppointments) {
-        refetchAppointments()
+        refetchAppointments();
       } else {
-        router.refresh()
+        router.refresh();
       }
     }
-  }, [router, refetchAppointments, completeData])
+  }, [router, refetchAppointments, completeData]);
 
   useEffect(() => {
     if (notesData?.success) {
-      toast.success('Notes saved successfully')
-      setAction(null)
+      toast.success("Notes saved successfully");
+      setAction(null);
       if (refetchAppointments) {
-        refetchAppointments()
+        refetchAppointments();
       } else {
-        router.refresh()
+        router.refresh();
       }
     }
-  }, [notesData, router, refetchAppointments])
+  }, [notesData, router, refetchAppointments]);
 
   useEffect(() => {
     if (tokenData?.success) {
@@ -182,26 +188,27 @@ export function Appointmentcard({
         `/video-call?sessionId=${tokenData.videoSessionId}&token=${tokenData.token}&appointmentId=${appointment.id}`
       );
     } else if (tokenData?.error) {
-      setAction(null)
+      setAction(null);
     }
-  }, [tokenData, appointment.id, router])
+  }, [tokenData, appointment.id, router]);
 
   const isAppointmentActive = () => {
-    const now = new Date()
-    const appointmentStartTime = new Date(appointment.startTime)
-    const appointmentEndTime = new Date(appointment.endTime)
+    const now = new Date();
+    const appointmentStartTime = new Date(appointment.startTime);
+    const appointmentEndTime = new Date(appointment.endTime);
 
     return (
-      (appointmentStartTime.getTime() - now.getTime() <= 30 * 60 * 1000 && now < appointmentStartTime) ||
+      (appointmentStartTime.getTime() - now.getTime() <= 30 * 60 * 1000 &&
+        now < appointmentStartTime) ||
       (now >= appointmentStartTime && now <= appointmentEndTime)
-    )
-  }
+    );
+  };
 
   const otherParty =
-  userRole === "DOCTOR" ? appointment.patient : appointment.doctor;
+    userRole === "DOCTOR" ? appointment.patient : appointment.doctor;
 
-const otherPartyLabel = userRole === "DOCTOR" ? "Patient" : "Doctor";
-const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
+  const otherPartyLabel = userRole === "DOCTOR" ? "Patient" : "Doctor";
+  const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
   return (
     <>
       <Card className="border-emerald-900/20 hover:border-emerald-700/30 transition-all">
@@ -548,7 +555,5 @@ const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }
-
-
