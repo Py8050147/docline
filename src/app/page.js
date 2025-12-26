@@ -5,13 +5,13 @@ import Link from "next/link";
 import { ArrowRight, Stethoscope } from "lucide-react"
 import { features, testimonials, creditBenefits } from "@/lib/data/data";
 import { Card, CardContent, CardHeader, CardTitle } from "../../@/components/ui/card";
-// import Pricing from "@/components/pricing";
+import Pricing from "@/components/pricing";
 
 export default function Home() {
   return (
     <div className="bg-background">
       {/* HERO SECTION  */}
-     <section className="relative overflow-hidden py-32">
+      <section className="relative overflow-hidden py-32">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
@@ -119,7 +119,7 @@ export default function Home() {
 
           <div className="mx-auto">
             {/* Clerk Pricing Table */}
-            {/* <Pricing /> */}
+            <Pricing />
 
             {/* Description */}
             <Card className="mt-12 bg-muted/20 border-violet-900/30">

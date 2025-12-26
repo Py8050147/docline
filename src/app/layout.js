@@ -1,12 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
+  ClerkProvider
 } from '@clerk/nextjs'
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes"
@@ -32,18 +27,18 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={{
       baseTheme: dark,
     }}>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning='true'>
         <head>
           <link rel="icon" href="/DOCLINE.png" sizes="any" />
         </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <ThemeProvider
-             attribute="class"
-             defaultTheme="system"
-             enableSystem
-             disableTransitionOnChange
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
           >
             <Header />
             <main className=" min-h-screen">{children}</main>
@@ -53,9 +48,9 @@ export default function RootLayout({ children }) {
                 <p>Made with 💗 by Pankaj</p>
               </div>
             </footer>
-            </ThemeProvider>
-      </body>
+          </ThemeProvider>
+        </body>
       </html>
-      </ClerkProvider>
+    </ClerkProvider>
   );
 }

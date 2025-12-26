@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { format } from "date-fns";
 import { useState, useEffect } from "react";
@@ -33,7 +34,6 @@ import { generateVideoToken } from "@/action/appointment";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { useEmailLink } from "@clerk/nextjs";
 
 export function Appointmentcard({
   appointment,

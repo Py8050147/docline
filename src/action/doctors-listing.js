@@ -5,7 +5,7 @@ export async function getDoctorBySpecialty(specialty) {
         const doctors = await db.user.findMany({
             where: {
                 role: "DOCTOR",
-                VerificationStatus: "VERIFIED",
+                verificationStatus: "VERIFIED",
                 specialty: specialty.split("%20").join(" ")
             },
             orderBy: {
@@ -13,7 +13,7 @@ export async function getDoctorBySpecialty(specialty) {
             }
 
         })
-        return {doctors}
+        return { doctors }
     } catch (error) {
         console.error("Failed to fetch doctors by specialty:", error);
         return { error: "Failed to fetch doctors" };

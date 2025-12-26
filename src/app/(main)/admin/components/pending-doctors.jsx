@@ -1,105 +1,125 @@
 "use client";
 import { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../../../../../@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "../../../../../@/components/ui/card";
 import { Button } from "../../../../../@/components/ui/button";
 import { Check, X, User, Medal, FileText, ExternalLink } from "lucide-react";
 import { Separator } from "../../../../../@/components/ui/separator";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "../../../../../@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from "../../../../../@/components/ui/dialog";
 import { Badge } from "../../../../../@/components/ui/badge";
 import { format } from "date-fns";
-import { updateDoctorStatus } from "../../../../../action/admin";
+import { updateDoctorStatus } from "@/action/admin";
 import useFetch from "@/hooks/use-fetch";
 import { useEffect } from "react";
 import { BarLoader } from "react-spinners";
 
-export  function PendingDoctors({doctors}) {
-    const [selectedDoctor, setSelectedDoctor] = useState(null);
+export function PendingDoctors({ doctors }) {
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-    const { data, loading, error, fn = submitStatusUpdate } = useFetch(updateDoctorStatus);
-    
-    const handleViewDetails = (doctor) => {
-        setSelectedDoctor(doctor);
+  const {
+    data,
+    loading,
+    error,
+    fn = submitStatusUpdate,
+  } = useFetch(updateDoctorStatus);
+
+  const handleViewDetails = (doctor) => {
+    setSelectedDoctor(doctor);
+  };
+
+  const handleCloseDialog = async (doctorId, status) => {
+    if (loading) return;
+    const formData = new FormData();
+    formData.append("doctorId", doctorId);
+    formData.append("status", status);
+    // fn(formData);
+    await submitStatusUpdate(formData);
+  };
+
+  useEffect(() => {
+    if (data && data?.success) {
+      handleCloseDialog();
     }
+  }, [data]);
 
-    const handleCloseDialog = async (doctorId, status) => {
-        if (loading) return;
-        const formData = new FormData()
-        formData.append("doctorId", doctorId);
-        formData.append("status", status);
-        // fn(formData);
-        await submitStatusUpdate(formData)
-    };
-
-    useEffect(() => {
-        if (data && data?.success) {
-            handleCloseDialog()
-        }
-    }, [data])
-
-
-    return (
-        <div>
-            <Card className="bg-muted/20 border-emerald-900/20">
-                <CardHeader>
-                    <CardTitle className="text-xl font-bold text-white">Pending Doctors Verification</CardTitle>
-                    <CardDescription>
+  return (
+    <div>
+      <Card className="bg-muted/20 border-emerald-900/20">
+        <CardHeader>
+          <CardTitle className="text-xl font-bold text-white">
+            Pending Doctors Verification
+          </CardTitle>
+          <CardDescription>
             Review and approve doctor applications
           </CardDescription>
-                </CardHeader>
-                <CardContent>
-                    {doctor.length === 0 ? (
-                         <div className="text-center py-8 text-muted-foreground">
-                         No pending verification requests at this time.
-                       </div>
-                    ) : (
-                            <div className=" space-y-4">
-                                {doctors.map((doctor) => (
-                                       <Card
-                                       key={doctor.id}
-                                       className="bg-background border-emerald-900/20 hover:border-emerald-700/30 transition-all"
-                                     >
-                                       <CardContent className="p-4">
-                                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                                           <div className="flex items-center gap-3">
-                                             <div className="bg-muted/20 rounded-full p-2">
-                                               <User className="h-5 w-5 text-emerald-400" />
-                                             </div>
-                                             <div>
-                                               <h3 className="font-medium text-white">
-                                                 {doctor.name}
-                                               </h3>
-                                               <p className="text-sm text-muted-foreground">
-                                                 {doctor.specialty} • {doctor.experience} years
-                                                 experience
-                                               </p>
-                                             </div>
-                                           </div>
-                                           <div className="flex items-center gap-2 self-end md:self-auto">
-                                             <Badge
-                                               variant="outline"
-                                               className="bg-amber-900/20 border-amber-900/30 text-amber-400"
-                                             >
-                                               Pending
-                                             </Badge>
-                                             <Button
-                                               variant="outline"
-                                               size="sm"
-                                               onClick={() => handleViewDetails(doctor)}
-                                               className="border-emerald-900/30 hover:bg-muted/80"
-                                             >
-                                               View Details
-                                             </Button>
-                                           </div>
-                                         </div>
-                                       </CardContent>
-                                     </Card>
-                                ))}
-                       </div>
-                    )}
-                </CardContent>
-            </Card>
+        </CardHeader>
+        <CardContent>
+          {doctors.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              No pending verification requests at this time.
+            </div>
+          ) : (
+            <div className=" space-y-4">
+              {doctors.map((doctor) => (
+                <Card
+                  key={doctor.id}
+                  className="bg-background border-emerald-900/20 hover:border-emerald-700/30 transition-all"
+                >
+                  <CardContent className="p-4">
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                      <div className="flex items-center gap-3">
+                        <div className="bg-muted/20 rounded-full p-2">
+                          <User className="h-5 w-5 text-emerald-400" />
+                        </div>
+                        <div>
+                          <h3 className="font-medium text-white">
+                            {doctor.name}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {doctor.specialty} • {doctor.experience} years
+                            experience
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 self-end md:self-auto">
+                        <Badge
+                          variant="outline"
+                          className="bg-amber-900/20 border-amber-900/30 text-amber-400"
+                        >
+                          Pending
+                        </Badge>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => handleViewDetails(doctor)}
+                          className="border-emerald-900/30 hover:bg-muted/80"
+                        >
+                          View Details
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
 
-            {selectedDoctor && (
+      {selectedDoctor && (
         <Dialog open={!!selectedDoctor} onOpenChange={handleCloseDialog}>
           <DialogContent className="max-w-3xl">
             <DialogHeader>
@@ -232,6 +252,6 @@ export  function PendingDoctors({doctors}) {
           </DialogContent>
         </Dialog>
       )}
-        </div>
-    )
+    </div>
+  );
 }

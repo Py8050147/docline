@@ -5,10 +5,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+} from "../../../../../@/components/ui/card";
+import { Button } from "../../../../../@/components/ui/button";
 import Link from "next/link";
-import { getCurrentUser } from "@/actions/onboarding";
+import { getCurrentUser } from "@/action/onboarding";
 import { redirect } from "next/navigation";
 
 export default async function VerificationPage() {

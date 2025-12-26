@@ -9,7 +9,7 @@ export default async function DoctorSpecialtyPage({ params }) {
     redirect("/doctors");
   }
 
-  const { doctors, error } = await getDoctorsBySpecialty(specialty);
+  const { doctors, error } = await getDoctorBySpecialty(specialty);
 
   if (error) {
     console.error("Error fetching doctors:", error);

@@ -1,13 +1,12 @@
-import { TabsContent } from "@/components/ui/tabs";
+import { TabsContent } from "../../../../@/components/ui/tabs";
 import { PendingDoctors } from "./components/pending-doctors";
 import { VerifiedDoctors } from "./components/verified-doctors";
 import { PendingPayouts } from "./components/pending-payouts";
 import {
   getPendingDoctor,
   getVerifyedDoctor,
-  getPendingPayout
- } from "@/action/admin";
-
+  getPendingPayout,
+} from "@/action/admin";
 
 export default async function AdminPage() {
   // Fetch all data in parallel

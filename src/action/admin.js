@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 export async function verifyAdmin() {
   const { userId } = await auth();
   if (!userId) {
-    throw new Error("unauthorized persons");
+    return false;
   }
   try {
     const user = await db.user.findUnique({
@@ -24,26 +24,29 @@ export async function verifyAdmin() {
 }
 
 export async function getPendingDoctor() {
-    const isAdmin = await verifyAdmin();
-  if (!isAdmin) throw new Error("Unauthorized");
-try {
+  const isAdmin = await verifyAdmin();
+  console.log('isAdmin', isAdmin)
+  if (!isAdmin) {
+    throw new Error("Unauthorized");
+  }
+  try {
     const pendingDoctor = await db.user.findMany({
-        where: {
-            role: 'DOCTOR',
-            VerificationStatus: 'PENDING'
-        },
-        orderBy: {
-            createdAt: 'desc'
-        }
+      where: {
+        role: 'DOCTOR',
+        verificationStatus: 'PENDING'
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
     })
 
-    return {doctor: pendingDoctor}
-} catch (error) {
+    return { doctors: pendingDoctor }
+  } catch (error) {
     throw new Error("Failed to fetch pending doctors");
-}
+  }
 }
 
-export async function getVerifyedDoctor () {
+export async function getVerifyedDoctor() {
   const isAdmin = await verifyAdmin()
   if (!isAdmin) {
     return false
@@ -52,19 +55,19 @@ export async function getVerifyedDoctor () {
     const verifiedDoctor = await db.user.findMany({
       where: {
         role: 'DOCTOR',
-        VerificationStatus: 'VERIFIED'
+        verificationStatus: 'VERIFIED'
       },
       orderBy: {
         name: 'asc'
       }
     })
-    return {doctor: verifiedDoctor}
+    return { doctors: verifiedDoctor }
   } catch (error) {
     throw new Error("Failed to fetch pending doctors");
   }
 }
 
-export async function upadateStatus(formData) {
+export async function updateDoctorStatus(formData) {
   const isAdmin = await verifyAdmin()
   if (!isAdmin) {
     return false
@@ -84,9 +87,9 @@ export async function upadateStatus(formData) {
         VerificationStatus: status
       }
     })
- 
+
     revalidatePath('/admin')
-    return {doctor: updatedDoctor}
+    return { doctor: updatedDoctor }
   } catch (error) {
     console.error("Failed to update doctor status:", error);
     throw new Error(`Failed to update doctor status: ${error.message}`);
@@ -100,14 +103,14 @@ export async function updatedDoctorActiveStatus(formData) {
   }
 
   const doctorId = formData.get('doctorId')
-  const suspend = formData.get('suspend') === 'true';
+  const suspend = formData.get("suspend") === "true";
   if (!doctorId) {
     throw new Error('doctor not found')
   }
 
   try {
-    const status = suspend ? 'PENDING' : 'VERIFIED'
-    = await db.user.update({
+    const status = suspend ? "PENDING" : "VERIFIED";
+    await db.user.update({
       where: {
         id: doctorId
       },
@@ -115,7 +118,7 @@ export async function updatedDoctorActiveStatus(formData) {
         VerificationStatus: status
       }
     })
- 
+
     revalidatePath('/admin')
     return { success: true };
   } catch (error) {
@@ -127,11 +130,11 @@ export async function updatedDoctorActiveStatus(formData) {
 export async function getPendingPayout() {
   const isAdmin = await verifyAdmin()
   if (!isAdmin) {
-    return false
+    throw new Error("Unauthorized");
   }
 
   try {
-    const pendingPayout = await db.payout.findUnique({
+    const pendingPayout = await db.payout.findMany({
       where: {
         status: 'PROCESSING'
       },
@@ -147,11 +150,11 @@ export async function getPendingPayout() {
         }
       },
       orderBy: {
-        cretedAt: 'desc'
+        createdAt: 'desc'
       }
     })
 
-    return {payout: pendingPayout}
+    return { payouts: pendingPayout }
   } catch (error) {
     console.error("Failed to fetch pending payouts:", error);
     throw new Error("Failed to fetch pending payouts");
@@ -187,7 +190,7 @@ export async function approvePayout(formData) {
       },
     });
 
-    
+
     if (!payout) {
       throw new Error("Payout request not found or already processed");
     }
