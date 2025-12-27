@@ -26,10 +26,10 @@ export default function DoctorAppointmentsList() {
   const appointments = data?.appointments || [];
 
   return (
-    <Card className="border-emerald-900/20">
+    <Card className="border-violet-900/20">
       <CardHeader>
         <CardTitle className="text-xl font-bold text-white flex items-center">
-          <Calendar className="h-5 w-5 mr-2 text-emerald-400" />
+          <Calendar className="h-5 w-5 mr-2 text-violet-400" />
           Upcoming Appointments
         </CardTitle>
       </CardHeader>
@@ -41,7 +41,7 @@ export default function DoctorAppointmentsList() {
         ) : appointments.length > 0 ? (
           <div className="space-y-4">
             {appointments.map((appointment) => (
-              <AppointmentCard
+              <Appointmentcard
                 key={appointment.id}
                 appointment={appointment}
                 userRole="DOCTOR"

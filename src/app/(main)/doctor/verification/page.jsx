@@ -25,11 +25,11 @@ export default async function VerificationPage() {
   return (
     <div className="container mx-auto px-4 py-12">
       <div className="max-w-2xl mx-auto">
-        <Card className="border-emerald-900/20">
+        <Card className="border-violet-900/20">
           <CardHeader className="text-center">
             <div
               className={`mx-auto p-4 ${
-                isRejected ? "bg-red-900/20" : "bg-amber-900/20"
+                isRejected ? "bg-red-900/20" : "bg-violet-900/20"
               } rounded-full mb-4 w-fit`}
             >
               {isRejected ? (
@@ -94,14 +94,11 @@ export default async function VerificationPage() {
                   <Button
                     asChild
                     variant="outline"
-                    className="border-emerald-900/30"
+                    className="border-violet-900/30"
                   >
                     <Link href="/">Return to Home</Link>
                   </Button>
-                  <Button
-                    asChild
-                    className="bg-emerald-600 hover:bg-emerald-700"
-                  >
+                  <Button asChild className="bg-violet-600 hover:bg-violet-700">
                     <Link href="/doctor/update-profile">Update Profile</Link>
                   </Button>
                 </>
@@ -110,14 +107,11 @@ export default async function VerificationPage() {
                   <Button
                     asChild
                     variant="outline"
-                    className="border-emerald-900/30"
+                    className="border-violet-900/30"
                   >
                     <Link href="/">Return to Home</Link>
                   </Button>
-                  <Button
-                    asChild
-                    className="bg-emerald-600 hover:bg-emerald-700"
-                  >
+                  <Button asChild className="bg-violet-600 hover:bg-violet-700">
                     <Link href="/contact-support">Contact Support</Link>
                   </Button>
                 </>

@@ -52,7 +52,7 @@ export function SlotPicker({ days, onSelectSlot }) {
                 <div>({format(new Date(day.date), "EEE")})</div>
               </div>
               {day.slots.length > 0 && (
-                <div className="ml-2 bg-emerald-900/30 text-emerald-400 text-xs px-2 py-1 rounded">
+                <div className="ml-2 bg-violet-900/30 text-violet-400 text-xs px-2 py-1 rounded">
                   {day.slots.length}
                 </div>
               )}
@@ -75,10 +75,10 @@ export function SlotPicker({ days, onSelectSlot }) {
                   {day.slots.map((slot) => (
                     <Card
                       key={slot.startTime}
-                      className={`border-emerald-900/20 cursor-pointer transition-all ${
+                      className={`border-violet-900/20 cursor-pointer transition-all ${
                         selectedSlot?.startTime === slot.startTime
-                          ? "bg-emerald-900/30 border-emerald-600"
-                          : "hover:border-emerald-700/40"
+                          ? "bg-violet-900/30 border-violet-600"
+                          : "hover:border-violet-700/40"
                       }`}
                       onClick={() => handleSlotSelect(slot)}
                     >
@@ -86,7 +86,7 @@ export function SlotPicker({ days, onSelectSlot }) {
                         <Clock
                           className={`h-4 w-4 mr-2 ${
                             selectedSlot?.startTime === slot.startTime
-                              ? "text-emerald-400"
+                              ? "text-violet-400"
                               : "text-muted-foreground"
                           }`}
                         />
@@ -113,7 +113,7 @@ export function SlotPicker({ days, onSelectSlot }) {
         <Button
           onClick={confirmSelection}
           disabled={!selectedSlot}
-          className="bg-emerald-600 hover:bg-emerald-700"
+          className="bg-violet-600 hover:bg-violet-700"
         >
           Continue
           <ChevronRight className="ml-2 h-4 w-4" />

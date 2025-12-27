@@ -14,7 +14,7 @@ const PLAN_CREDITS = {
 
 // Each appointment costs 2 credits
 const APPOINTMENT_CREDIT_COST = 2;
-export async function checkAndAllocateCredits() {
+export async function checkAndAllocateCredits(user) {
   try {
     if (!user) {
       return null;

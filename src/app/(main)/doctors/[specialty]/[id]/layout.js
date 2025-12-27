@@ -1,6 +1,6 @@
-import { getDoctorById } from "@/actions/appointments";
-import { redirect } from "next/navigation";
+import { getDoctorById } from "@/action/appointment";
 import { PageHeader } from "@/components/page-header";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params }) {
     const { id } = await params;

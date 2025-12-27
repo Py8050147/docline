@@ -211,7 +211,7 @@ export function Appointmentcard({
   const otherPartyIcon = userRole === "DOCTOR" ? <User /> : <Stethoscope />;
   return (
     <>
-      <Card className="border-emerald-900/20 hover:border-emerald-700/30 transition-all">
+      <Card className="border-violet-900/20 hover:border-violet-700/30 transition-all">
         <CardContent className="p-4">
           <div className="flex flex-col md:flex-row justify-between gap-4">
             <div className="flex items-start gap-3">
@@ -252,7 +252,7 @@ export function Appointmentcard({
                 variant="outline"
                 className={
                   appointment.status === "COMPLETED"
-                    ? "bg-emerald-900/20 border-emerald-900/30 text-emerald-400"
+                    ? "bg-violet-900/20 border-violet-900/30 text-violet-400"
                     : appointment.status === "CANCELLED"
                     ? "bg-red-900/20 border-red-900/30 text-red-400"
                     : "bg-amber-900/20 border-amber-900/30 text-amber-400"
@@ -266,7 +266,7 @@ export function Appointmentcard({
                     size="sm"
                     onClick={handleMarkCompleted}
                     disabled={completeLoading}
-                    className="bg-emerald-600 hover:bg-emerald-700"
+                    className="bg-violet-600 hover:bg-violet-700"
                   >
                     {completeLoading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -281,7 +281,7 @@ export function Appointmentcard({
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-emerald-900/30"
+                  className="border-violet-900/30"
                   onClick={() => setOpen(true)}
                 >
                   View Details
@@ -313,7 +313,7 @@ export function Appointmentcard({
                 {otherPartyLabel}
               </h4>
               <div className="flex items-center">
-                <div className="h-5 w-5 text-emerald-400 mr-2">
+                <div className="h-5 w-5 text-violet-400 mr-2">
                   {otherPartyIcon}
                 </div>
                 <div>
@@ -343,13 +343,13 @@ export function Appointmentcard({
               </h4>
               <div className="flex flex-col gap-1">
                 <div className="flex items-center">
-                  <Calendar className="h-5 w-5 text-emerald-400 mr-2" />
+                  <Calendar className="h-5 w-5 text-violet-400 mr-2" />
                   <p className="text-white">
                     {formatDateTime(appointment.startTime)}
                   </p>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="h-5 w-5 text-emerald-400 mr-2" />
+                  <Clock className="h-5 w-5 text-violet-400 mr-2" />
                   <p className="text-white">
                     {formatTime(appointment.startTime)} -{" "}
                     {formatTime(appointment.endTime)}
@@ -367,7 +367,7 @@ export function Appointmentcard({
                 variant="outline"
                 className={
                   appointment.status === "COMPLETED"
-                    ? "bg-emerald-900/20 border-emerald-900/30 text-emerald-400"
+                    ? "bg-violet-900/20 border-violet-900/30 text-violet-400"
                     : appointment.status === "CANCELLED"
                     ? "bg-red-900/20 border-red-900/30 text-red-400"
                     : "bg-amber-900/20 border-amber-900/30 text-amber-400"
@@ -385,7 +385,7 @@ export function Appointmentcard({
                     ? "Patient Description"
                     : "Your Description"}
                 </h4>
-                <div className="p-3 rounded-md bg-muted/20 border border-emerald-900/20">
+                <div className="p-3 rounded-md bg-muted/20 border border-violet-900/20">
                   <p className="text-white whitespace-pre-line">
                     {appointment.patientDescription}
                   </p>
@@ -400,7 +400,7 @@ export function Appointmentcard({
                   Video Consultation
                 </h4>
                 <Button
-                  className="w-full bg-emerald-600 hover:bg-emerald-700"
+                  className="w-full bg-violet-600 hover:bg-violet-700"
                   disabled={
                     !isAppointmentActive() || action === "video" || tokenLoading
                   }
@@ -436,7 +436,7 @@ export function Appointmentcard({
                       variant="ghost"
                       size="sm"
                       onClick={() => setAction("notes")}
-                      className="h-7 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-900/20"
+                      className="h-7 text-violet-400 hover:text-violet-300 hover:bg-violet-900/20"
                     >
                       <Edit className="h-3.5 w-3.5 mr-1" />
                       {appointment.notes ? "Edit" : "Add"}
@@ -450,7 +450,7 @@ export function Appointmentcard({
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Enter your clinical notes here..."
-                    className="bg-background border-emerald-900/20 min-h-[100px]"
+                    className="bg-background border-violet-900/20 min-h-[100px]"
                   />
                   <div className="flex justify-end space-x-2">
                     <Button
@@ -462,7 +462,7 @@ export function Appointmentcard({
                         setNotes(appointment.notes || "");
                       }}
                       disabled={notesLoading}
-                      className="border-emerald-900/30"
+                      className="border-violet-900/30"
                     >
                       Cancel
                     </Button>
@@ -470,7 +470,7 @@ export function Appointmentcard({
                       size="sm"
                       onClick={handleSaveNotes}
                       disabled={notesLoading}
-                      className="bg-emerald-600 hover:bg-emerald-700"
+                      className="bg-violet-600 hover:bg-violet-700"
                     >
                       {notesLoading ? (
                         <>
@@ -484,7 +484,7 @@ export function Appointmentcard({
                   </div>
                 </div>
               ) : (
-                <div className="p-3 rounded-md bg-muted/20 border border-emerald-900/20 min-h-[80px]">
+                <div className="p-3 rounded-md bg-muted/20 border border-violet-900/20 min-h-[80px]">
                   {appointment.notes ? (
                     <p className="text-white whitespace-pre-line">
                       {appointment.notes}
@@ -506,7 +506,7 @@ export function Appointmentcard({
                 <Button
                   onClick={handleMarkCompleted}
                   disabled={completeLoading}
-                  className="bg-emerald-600 hover:bg-emerald-700"
+                  className="bg-violet-600 hover:bg-violet-700"
                 >
                   {completeLoading ? (
                     <>
@@ -547,7 +547,7 @@ export function Appointmentcard({
 
             <Button
               onClick={() => setOpen(false)}
-              className="bg-emerald-600 hover:bg-emerald-700"
+              className="bg-violet-600 hover:bg-violet-700"
             >
               Close
             </Button>

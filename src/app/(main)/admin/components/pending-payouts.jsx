@@ -1,70 +1,78 @@
 "use client";
 import { useEffect, useState } from "react";
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from "../../../../../@/components/ui/card";
 import { Button } from "../../../../../@/components/ui/button";
-import { Check, User, DollarSign, Mail, Stethoscope, Loader2, AlarmCheck } from "lucide-react";
+import {
+  Check,
+  User,
+  DollarSign,
+  Mail,
+  Stethoscope,
+  Loader2,
+  AlarmCheck,
+} from "lucide-react";
 import { Badge } from "../../../../../@/components/ui/badge";
 import { format } from "date-fns";
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
 } from "../../../../../@/components/ui/dialog";
 import { AlertDescription, Alert } from "../../../../../@/components/ui/alert";
 import { approvePayout } from "@/action/admin";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
 import { BarLoader } from "react-spinners";
- 
+
 export function PendingPayouts() {
-    const [selectedPayout, setSelectedPayout] = useState(null)
-    const [showApproveDialog, setShowApproveDialog] = useState(false);
+  const [selectedPayout, setSelectedPayout] = useState(null);
+  const [showApproveDialog, setShowApproveDialog] = useState(false);
 
-    const { data, loading, fn: submitApproval } = useFetch(approvePayout)
-    
-    const handleViewDetails = (payout) => {
-        setSelectedPayout(payout)
+  const { data, loading, fn: submitApproval } = useFetch(approvePayout);
+
+  const handleViewDetails = (payout) => {
+    setSelectedPayout(payout);
+  };
+
+  const handleApprovePayout = (payout) => {
+    setSelectedPayout(payout);
+    setShowApproveDialog(true);
+  };
+
+  const confirmApproval = async () => {
+    if (!selectedPayout || loading) return;
+
+    const formData = new FormData();
+    formData.append("payoutId", selectedPayout.id);
+
+    await submitApproval(formData);
+  };
+
+  useEffect(() => {
+    if (data?.success) {
+      setShowApproveDialog(false);
+      setSelectedPayout(null);
+      toast.success("Payout approved successfully!");
     }
+  }, [data]);
 
-    const handleApprovePayout = (payout) => {
-        setSelectedPayout(payout);
-        setShowApproveDialog(true);
-    }
+  const closeDialogs = () => {
+    setSelectedPayout(null);
+    setShowApproveDialog(false);
+  };
 
-    const confirmApproval = async () => {
-        if (!selectedPayout || loading) return
-
-        const formData = new FormData()
-        formData.append("payoutId", selectedPayout.id)
-
-        await submitApproval(formData);
-    }
-
-    useEffect(() => {
-        if (data?.success) {
-            setShowApproveDialog(false)
-            setSelectedPayout(null)
-            toast.success("Payout approved successfully!")
-        }
-    }, [data])
-
-    const closeDialogs = () => {
-        setSelectedPayout(null);
-        setShowApproveDialog(false);
-    };
-    
-    return (
-        <div>
-             <Card className="bg-muted/20 border-emerald-900/20">
+  return (
+    <div>
+      <Card className="bg-muted/20 border-violet-900/20">
         <CardHeader>
           <CardTitle className="text-xl font-bold text-white">
             Pending Payouts
@@ -83,13 +91,13 @@ export function PendingPayouts() {
               {payouts.map((payout) => (
                 <Card
                   key={payout.id}
-                  className="bg-background border-emerald-900/20 hover:border-emerald-700/30 transition-all"
+                  className="bg-background border-violet-900/20 hover:border-violet-700/30 transition-all"
                 >
                   <CardContent className="p-4">
                     <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                       <div className="flex items-start gap-3">
                         <div className="bg-muted/20 rounded-full p-2 mt-1">
-                          <User className="h-5 w-5 text-emerald-400" />
+                          <User className="h-5 w-5 text-violet-400" />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-medium text-white">
@@ -100,14 +108,14 @@ export function PendingPayouts() {
                           </p>
                           <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-muted-foreground">
                             <div className="flex items-center">
-                              <DollarSign className="h-4 w-4 mr-1 text-emerald-400" />
+                              <DollarSign className="h-4 w-4 mr-1 text-violet-400" />
                               <span>
                                 {payout.credits} credits • $
                                 {payout.netAmount.toFixed(2)}
                               </span>
                             </div>
                             <div className="flex items-center">
-                              <Mail className="h-4 w-4 mr-1 text-emerald-400" />
+                              <Mail className="h-4 w-4 mr-1 text-violet-400" />
                               <span className="text-xs">
                                 {payout.paypalEmail}
                               </span>
@@ -134,14 +142,14 @@ export function PendingPayouts() {
                             variant="outline"
                             size="sm"
                             onClick={() => handleViewDetails(payout)}
-                            className="border-emerald-900/30 hover:bg-muted/80"
+                            className="border-violet-900/30 hover:bg-muted/80"
                           >
                             View Details
                           </Button>
                           <Button
                             size="sm"
                             onClick={() => handleApprovePayout(payout)}
-                            className="bg-emerald-600 hover:bg-emerald-700"
+                            className="bg-violet-600 hover:bg-violet-700"
                           >
                             <Check className="h-4 w-4 mr-1" />
                             Approve
@@ -174,7 +182,7 @@ export function PendingPayouts() {
               {/* Doctor Information */}
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <Stethoscope className="h-5 w-5 text-emerald-400" />
+                  <Stethoscope className="h-5 w-5 text-violet-400" />
                   <h3 className="text-white font-medium">Doctor Information</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -214,10 +222,10 @@ export function PendingPayouts() {
               {/* Payout Information */}
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
-                  <DollarSign className="h-5 w-5 text-emerald-400" />
+                  <DollarSign className="h-5 w-5 text-violet-400" />
                   <h3 className="text-white font-medium">Payout Details</h3>
                 </div>
-                <div className="bg-muted/20 p-4 rounded-lg border border-emerald-900/20 space-y-3">
+                <div className="bg-muted/20 p-4 rounded-lg border border-violet-900/20 space-y-3">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">
                       Credits to pay out:
@@ -242,13 +250,13 @@ export function PendingPayouts() {
                       -${selectedPayout.platformFee.toFixed(2)}
                     </span>
                   </div>
-                  <div className="border-t border-emerald-900/20 pt-3 flex justify-between font-medium">
+                  <div className="border-t border-violet-900/20 pt-3 flex justify-between font-medium">
                     <span className="text-white">Net payout:</span>
-                    <span className="text-emerald-400">
+                    <span className="text-violet-400">
                       ${selectedPayout.netAmount.toFixed(2)}
                     </span>
                   </div>
-                  <div className="border-t border-emerald-900/20 pt-3">
+                  <div className="border-t border-violet-900/20 pt-3">
                     <p className="text-sm font-medium text-muted-foreground">
                       PayPal Email
                     </p>
@@ -275,7 +283,7 @@ export function PendingPayouts() {
               <Button
                 variant="outline"
                 onClick={closeDialogs}
-                className="border-emerald-900/30"
+                className="border-violet-900/30"
               >
                 Close
               </Button>
@@ -284,7 +292,7 @@ export function PendingPayouts() {
                 disabled={
                   selectedPayout.doctor.credits < selectedPayout.credits
                 }
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-violet-600 hover:bg-violet-700"
               >
                 <Check className="h-4 w-4 mr-1" />
                 Approve Payout
@@ -326,7 +334,7 @@ export function PendingPayouts() {
                 </AlertDescription>
               </Alert>
 
-              <div className="bg-muted/20 p-4 rounded-lg border border-emerald-900/20">
+              <div className="bg-muted/20 p-4 rounded-lg border border-violet-900/20">
                 <div className="flex justify-between mb-2">
                   <span className="text-muted-foreground">Doctor:</span>
                   <span className="text-white">
@@ -335,7 +343,7 @@ export function PendingPayouts() {
                 </div>
                 <div className="flex justify-between mb-2">
                   <span className="text-muted-foreground">Amount to pay:</span>
-                  <span className="text-emerald-400 font-medium">
+                  <span className="text-violet-400 font-medium">
                     ${selectedPayout.netAmount.toFixed(2)}
                   </span>
                 </div>
@@ -355,14 +363,14 @@ export function PendingPayouts() {
                 variant="outline"
                 onClick={() => setShowApproveDialog(false)}
                 disabled={loading}
-                className="border-emerald-900/30"
+                className="border-violet-900/30"
               >
                 Cancel
               </Button>
               <Button
                 onClick={confirmApproval}
                 disabled={loading}
-                className="bg-emerald-600 hover:bg-emerald-700"
+                className="bg-violet-600 hover:bg-violet-700"
               >
                 {loading ? (
                   <>
@@ -380,6 +388,6 @@ export function PendingPayouts() {
           </DialogContent>
         </Dialog>
       )}
-        </div>
-    )
+    </div>
+  );
 }
