@@ -1,4 +1,4 @@
-import VideoCall from "./video-call-ui";
+import VideoCall from "./video-call";
 
 export default async function VideoCallPage({ searchParams }) {
   const { sessionId, token } = await searchParams;
