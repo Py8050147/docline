@@ -6,14 +6,16 @@ import { deductCreditsForAppointment } from "./credit";
 import { Vonage } from "@vonage/server-sdk";
 import { Auth } from "@vonage/auth";
 import { addDays, addMinutes, format, isBefore, endOfDay } from "date-fns";
-import { Award } from "lucide-react";
-import { threadId } from "worker_threads";
-import { date } from "zod";
+// import { Award } from "lucide-react";
+// import { threadId } from "worker_threads";
+// import { date } from "zod";
 
 const credentials = new Auth({
   applicationId: process.env.NEXT_PUBLIC_VONAGE_APPLICATION_ID,
   privateKey: process.env.VONAGE_PRIVATE_KEY,
 });
+
+console.log("credentials", credentials)
 
 const options = {};
 const vonage = new Vonage(credentials, options);
@@ -28,10 +30,11 @@ export async function bookAppointment(formData) {
   try {
     const patient = await db.user.findUnique({
       where: {
-        clerckUserId: userId,
+        clerkUserId: userId,
         role: "PATIENT",
       },
     });
+    console.log("patient", patient)
 
     if (!patient) {
       throw new Error("Patient not found");
@@ -52,7 +55,7 @@ export async function bookAppointment(formData) {
       where: {
         id: doctorId,
         role: "DOCTOR",
-        VerificationStatus: "VERIFIED",
+        verificationStatus: "VERIFIED",
       },
     });
 
@@ -105,6 +108,7 @@ export async function bookAppointment(formData) {
     }
 
     const sessionId = await createVideoSession();
+    console.log("sessionId", sessionId)
 
     const { success, error } = await deductCreditsForAppointment(
       patient.id,
@@ -126,6 +130,7 @@ export async function bookAppointment(formData) {
         videoSessionId: sessionId, // Store the Vonage session ID
       },
     });
+    console.log("appointment", appointment)
 
     revalidatePath("/appointments");
     return { success: true, appointment: appointment };
@@ -138,6 +143,7 @@ export async function bookAppointment(formData) {
 async function createVideoSession() {
   try {
     const session = await vonage.video.createSession({ mediaMode: "routed" });
+    console.log("session", session)
     return session.sessionId;
   } catch (error) {
     throw new Error("Failed to create video session: " + error.message);
@@ -153,7 +159,7 @@ export async function generateVideoToken(formData) {
   try {
     const user = await db.user.findUnique({
       where: {
-        clerckUserId: userId,
+        clerkUserId: userId,
       },
     });
 
@@ -162,6 +168,7 @@ export async function generateVideoToken(formData) {
     }
 
     const appointmentId = formData.get("appointmentId");
+    console.log("appointmentId", appointmentId)
 
     const appointment = await db.appointment.findUnique({
       where: {
@@ -179,7 +186,7 @@ export async function generateVideoToken(formData) {
     }
 
     if (appointment.status !== "SCHEDULED") {
-      throw new Error("this appoThis appointment is not currently scheduled");
+      throw new Error("This appointment is not currently scheduled");
     }
 
     const now = new Date();
@@ -207,6 +214,7 @@ export async function generateVideoToken(formData) {
       expireTime: expirationToken,
       data: connectionData,
     });
+    console.log("Generated token:", token);
 
     await db.appointment.upadate({
       where: {

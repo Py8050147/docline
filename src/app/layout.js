@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css";
 import {
   ClerkProvider
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider appearance={{
       baseTheme: dark,
     }}>
-      <html lang="en" suppressHydrationWarning='true'>
+      <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="icon" href="/DOCLINE.png" sizes="any" />
         </head>

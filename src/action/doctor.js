@@ -310,6 +310,7 @@ export async function addAppointmentNotes(formData) {
     const appointmentId = formData.get("appointmentId");
     const notes = formData.get("notes");
 
+
     if (!appointmentId || !notes) {
       throw new Error("Appointment ID and notes are required");
     }
@@ -333,8 +334,10 @@ export async function addAppointmentNotes(formData) {
       },
       data: {
         notes,
-      },
+      }
+
     });
+    console.log(updatedAppointment)
 
     revalidatePath("/doctor");
     return { success: true, appointment: updatedAppointment };

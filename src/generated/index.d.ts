@@ -82,7 +82,7 @@ export type AppointmentStatus = (typeof AppointmentStatus)[keyof typeof Appointm
 
 export const TransactionType: {
   CREDIT_PURCHASE: 'CREDIT_PURCHASE',
-  APPOINTMENT_EDUCTION: 'APPOINTMENT_EDUCTION',
+  APPOINTMENT_DEDUCTION: 'APPOINTMENT_DEDUCTION',
   ADMIN_ADJUSTMENT: 'ADMIN_ADJUSTMENT'
 };
 
@@ -3812,7 +3812,7 @@ export namespace Prisma {
     startTime: Date | null
     endTime: Date | null
     status: $Enums.AppointmentStatus | null
-    NOTES: string | null
+    notes: string | null
     patientDescription: string | null
     videoSessionId: string | null
     videoSessionToken: string | null
@@ -3827,7 +3827,7 @@ export namespace Prisma {
     startTime: Date | null
     endTime: Date | null
     status: $Enums.AppointmentStatus | null
-    NOTES: string | null
+    notes: string | null
     patientDescription: string | null
     videoSessionId: string | null
     videoSessionToken: string | null
@@ -3842,7 +3842,7 @@ export namespace Prisma {
     startTime: number
     endTime: number
     status: number
-    NOTES: number
+    notes: number
     patientDescription: number
     videoSessionId: number
     videoSessionToken: number
@@ -3859,7 +3859,7 @@ export namespace Prisma {
     startTime?: true
     endTime?: true
     status?: true
-    NOTES?: true
+    notes?: true
     patientDescription?: true
     videoSessionId?: true
     videoSessionToken?: true
@@ -3874,7 +3874,7 @@ export namespace Prisma {
     startTime?: true
     endTime?: true
     status?: true
-    NOTES?: true
+    notes?: true
     patientDescription?: true
     videoSessionId?: true
     videoSessionToken?: true
@@ -3889,7 +3889,7 @@ export namespace Prisma {
     startTime?: true
     endTime?: true
     status?: true
-    NOTES?: true
+    notes?: true
     patientDescription?: true
     videoSessionId?: true
     videoSessionToken?: true
@@ -3977,7 +3977,7 @@ export namespace Prisma {
     startTime: Date
     endTime: Date
     status: $Enums.AppointmentStatus
-    NOTES: string | null
+    notes: string | null
     patientDescription: string | null
     videoSessionId: string | null
     videoSessionToken: string | null
@@ -4009,7 +4009,7 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    NOTES?: boolean
+    notes?: boolean
     patientDescription?: boolean
     videoSessionId?: boolean
     videoSessionToken?: boolean
@@ -4026,7 +4026,7 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    NOTES?: boolean
+    notes?: boolean
     patientDescription?: boolean
     videoSessionId?: boolean
     videoSessionToken?: boolean
@@ -4043,7 +4043,7 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    NOTES?: boolean
+    notes?: boolean
     patientDescription?: boolean
     videoSessionId?: boolean
     videoSessionToken?: boolean
@@ -4060,7 +4060,7 @@ export namespace Prisma {
     startTime?: boolean
     endTime?: boolean
     status?: boolean
-    NOTES?: boolean
+    notes?: boolean
     patientDescription?: boolean
     videoSessionId?: boolean
     videoSessionToken?: boolean
@@ -4068,7 +4068,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type AppointmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "patientId" | "doctorId" | "startTime" | "endTime" | "status" | "NOTES" | "patientDescription" | "videoSessionId" | "videoSessionToken" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
+  export type AppointmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "patientId" | "doctorId" | "startTime" | "endTime" | "status" | "notes" | "patientDescription" | "videoSessionId" | "videoSessionToken" | "createdAt" | "updatedAt", ExtArgs["result"]["appointment"]>
   export type AppointmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     patient?: boolean | UserDefaultArgs<ExtArgs>
     doctor?: boolean | UserDefaultArgs<ExtArgs>
@@ -4095,7 +4095,7 @@ export namespace Prisma {
       startTime: Date
       endTime: Date
       status: $Enums.AppointmentStatus
-      NOTES: string | null
+      notes: string | null
       patientDescription: string | null
       videoSessionId: string | null
       videoSessionToken: string | null
@@ -4532,7 +4532,7 @@ export namespace Prisma {
     readonly startTime: FieldRef<"Appointment", 'DateTime'>
     readonly endTime: FieldRef<"Appointment", 'DateTime'>
     readonly status: FieldRef<"Appointment", 'AppointmentStatus'>
-    readonly NOTES: FieldRef<"Appointment", 'String'>
+    readonly notes: FieldRef<"Appointment", 'String'>
     readonly patientDescription: FieldRef<"Appointment", 'String'>
     readonly videoSessionId: FieldRef<"Appointment", 'String'>
     readonly videoSessionToken: FieldRef<"Appointment", 'String'>
@@ -7306,7 +7306,7 @@ export namespace Prisma {
     startTime: 'startTime',
     endTime: 'endTime',
     status: 'status',
-    NOTES: 'NOTES',
+    notes: 'notes',
     patientDescription: 'patientDescription',
     videoSessionId: 'videoSessionId',
     videoSessionToken: 'videoSessionToken',
@@ -7708,7 +7708,7 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Appointment"> | Date | string
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-    NOTES?: StringNullableFilter<"Appointment"> | string | null
+    notes?: StringNullableFilter<"Appointment"> | string | null
     patientDescription?: StringNullableFilter<"Appointment"> | string | null
     videoSessionId?: StringNullableFilter<"Appointment"> | string | null
     videoSessionToken?: StringNullableFilter<"Appointment"> | string | null
@@ -7725,7 +7725,7 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    NOTES?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
     patientDescription?: SortOrderInput | SortOrder
     videoSessionId?: SortOrderInput | SortOrder
     videoSessionToken?: SortOrderInput | SortOrder
@@ -7745,7 +7745,7 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Appointment"> | Date | string
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-    NOTES?: StringNullableFilter<"Appointment"> | string | null
+    notes?: StringNullableFilter<"Appointment"> | string | null
     patientDescription?: StringNullableFilter<"Appointment"> | string | null
     videoSessionId?: StringNullableFilter<"Appointment"> | string | null
     videoSessionToken?: StringNullableFilter<"Appointment"> | string | null
@@ -7762,7 +7762,7 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    NOTES?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
     patientDescription?: SortOrderInput | SortOrder
     videoSessionId?: SortOrderInput | SortOrder
     videoSessionToken?: SortOrderInput | SortOrder
@@ -7783,7 +7783,7 @@ export namespace Prisma {
     startTime?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     endTime?: DateTimeWithAggregatesFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusWithAggregatesFilter<"Appointment"> | $Enums.AppointmentStatus
-    NOTES?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
+    notes?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     patientDescription?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     videoSessionId?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
     videoSessionToken?: StringNullableWithAggregatesFilter<"Appointment"> | string | null
@@ -8158,7 +8158,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -8175,7 +8175,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -8188,7 +8188,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8205,7 +8205,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8220,7 +8220,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -8233,7 +8233,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8248,7 +8248,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -8773,7 +8773,7 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    NOTES?: SortOrder
+    notes?: SortOrder
     patientDescription?: SortOrder
     videoSessionId?: SortOrder
     videoSessionToken?: SortOrder
@@ -8788,7 +8788,7 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    NOTES?: SortOrder
+    notes?: SortOrder
     patientDescription?: SortOrder
     videoSessionId?: SortOrder
     videoSessionToken?: SortOrder
@@ -8803,7 +8803,7 @@ export namespace Prisma {
     startTime?: SortOrder
     endTime?: SortOrder
     status?: SortOrder
-    NOTES?: SortOrder
+    notes?: SortOrder
     patientDescription?: SortOrder
     videoSessionId?: SortOrder
     videoSessionToken?: SortOrder
@@ -9656,7 +9656,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -9671,7 +9671,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -9694,7 +9694,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -9709,7 +9709,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -9845,7 +9845,7 @@ export namespace Prisma {
     startTime?: DateTimeFilter<"Appointment"> | Date | string
     endTime?: DateTimeFilter<"Appointment"> | Date | string
     status?: EnumAppointmentStatusFilter<"Appointment"> | $Enums.AppointmentStatus
-    NOTES?: StringNullableFilter<"Appointment"> | string | null
+    notes?: StringNullableFilter<"Appointment"> | string | null
     patientDescription?: StringNullableFilter<"Appointment"> | string | null
     videoSessionId?: StringNullableFilter<"Appointment"> | string | null
     videoSessionToken?: StringNullableFilter<"Appointment"> | string | null
@@ -10466,7 +10466,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -10480,7 +10480,7 @@ export namespace Prisma {
     startTime: Date | string
     endTime: Date | string
     status?: $Enums.AppointmentStatus
-    NOTES?: string | null
+    notes?: string | null
     patientDescription?: string | null
     videoSessionId?: string | null
     videoSessionToken?: string | null
@@ -10524,7 +10524,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10539,7 +10539,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10553,7 +10553,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10566,7 +10566,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10581,7 +10581,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null
@@ -10595,7 +10595,7 @@ export namespace Prisma {
     startTime?: DateTimeFieldUpdateOperationsInput | Date | string
     endTime?: DateTimeFieldUpdateOperationsInput | Date | string
     status?: EnumAppointmentStatusFieldUpdateOperationsInput | $Enums.AppointmentStatus
-    NOTES?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
     patientDescription?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionId?: NullableStringFieldUpdateOperationsInput | string | null
     videoSessionToken?: NullableStringFieldUpdateOperationsInput | string | null

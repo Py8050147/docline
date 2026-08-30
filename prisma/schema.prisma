@@ -79,7 +79,7 @@ model Appointment {
   startTime          DateTime
   endTime            DateTime
   status             AppointmentStatus @default(SCHEDULED)
-  NOTES              String?           @db.Text
+  notes              String?           @db.Text
   patientDescription String?           @db.Text
 
   videoSessionId    String?
@@ -110,7 +110,7 @@ model CreditTransaction {
 
 enum TransactionType {
   CREDIT_PURCHASE
-  APPOINTMENT_EDUCTION
+  APPOINTMENT_DEDUCTION
   ADMIN_ADJUSTMENT
 }
 

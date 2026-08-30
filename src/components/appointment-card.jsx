@@ -97,7 +97,7 @@ export function Appointmentcard({
 
     if (
       window.confirm(
-        "Are you sure you want to cancel this appointment? This action cannot be undone."
+        "Are you sure you want to cancel this appointment? This action cannot be undone.",
       )
     ) {
       const formData = new FormData();
@@ -115,13 +115,13 @@ export function Appointmentcard({
 
     if (now < appointmentEndTime) {
       alert(
-        "Cannot mark appointment as completed before the scheduled end time."
+        "Cannot mark appointment as completed before the scheduled end time.",
       );
       return;
     }
     if (
       window.confirm(
-        "Are you sure you want to mark this appointment as completed? This action cannot be undone."
+        "Are you sure you want to mark this appointment as completed? This action cannot be undone.",
       )
     ) {
       const formData = new FormData();
@@ -185,7 +185,7 @@ export function Appointmentcard({
   useEffect(() => {
     if (tokenData?.success) {
       router.push(
-        `/video-call?sessionId=${tokenData.videoSessionId}&token=${tokenData.token}&appointmentId=${appointment.id}`
+        `/video-call?sessionId=${tokenData.videoSessionId}&token=${tokenData.token}&appointmentId=${appointment.id}`,
       );
     } else if (tokenData?.error) {
       setAction(null);
@@ -254,8 +254,8 @@ export function Appointmentcard({
                   appointment.status === "COMPLETED"
                     ? "bg-violet-900/20 border-violet-900/30 text-violet-400"
                     : appointment.status === "CANCELLED"
-                    ? "bg-red-900/20 border-red-900/30 text-red-400"
-                    : "bg-amber-900/20 border-amber-900/30 text-amber-400"
+                      ? "bg-red-900/20 border-red-900/30 text-red-400"
+                      : "bg-amber-900/20 border-amber-900/30 text-amber-400"
                 }
               >
                 {appointment.status}
@@ -369,8 +369,8 @@ export function Appointmentcard({
                   appointment.status === "COMPLETED"
                     ? "bg-violet-900/20 border-violet-900/30 text-violet-400"
                     : appointment.status === "CANCELLED"
-                    ? "bg-red-900/20 border-red-900/30 text-red-400"
-                    : "bg-amber-900/20 border-amber-900/30 text-amber-400"
+                      ? "bg-red-900/20 border-red-900/30 text-red-400"
+                      : "bg-amber-900/20 border-amber-900/30 text-amber-400"
                 }
               >
                 {appointment.status}
@@ -484,7 +484,7 @@ export function Appointmentcard({
                   </div>
                 </div>
               ) : (
-                <div className="p-3 rounded-md bg-muted/20 border border-violet-900/20 min-h-[80px]">
+                <div className="p-3 rounded-md bg-muted/20 border border-violet-900/20 min-h-20">
                   {appointment.notes ? (
                     <p className="text-white whitespace-pre-line">
                       {appointment.notes}

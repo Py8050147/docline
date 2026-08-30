@@ -11,7 +11,7 @@ CREATE TYPE "SlotStatus" AS ENUM ('AVAILABLE', 'BLOCKED', 'BOOKED');
 CREATE TYPE "AppointmentStatus" AS ENUM ('SCHEDULED', 'COMPLETED', 'CANCELLED');
 
 -- CreateEnum
-CREATE TYPE "TransactionType" AS ENUM ('CREDIT_PURCHASE', 'APPOINTMENT_EDUCTION', 'ADMIN_ADJUSTMENT');
+CREATE TYPE "TransactionType" AS ENUM ('CREDIT_PURCHASE', 'APPOINTMENT_DEDUCTION', 'ADMIN_ADJUSTMENT');
 
 -- CreateEnum
 CREATE TYPE "PayoutStatus" AS ENUM ('PROCESSING', 'PROCESSED');
@@ -57,7 +57,7 @@ CREATE TABLE "Appointment" (
     "startTime" TIMESTAMP(3) NOT NULL,
     "endTime" TIMESTAMP(3) NOT NULL,
     "status" "AppointmentStatus" NOT NULL DEFAULT 'SCHEDULED',
-    "NOTES" TEXT,
+    "notes" TEXT,
     "patientDescription" TEXT,
     "videoSessionId" TEXT,
     "videoSessionToken" TEXT,

@@ -3,8 +3,8 @@ import { db } from "@/lib/data/prisma";
 import { auth } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 
-const CREDIT_VALUE = 10; 
-const PLATFORM_FEE_PER_CREDIT = 2;
+const CREDIT_VALUE = 10;
+const PLATFORM_FEE_PER_CREDIT = 10;
 const DOCTOR_FEE_PER_CREDIT = 8
 
 export async function requestPayout(formData) {
@@ -23,7 +23,7 @@ export async function requestPayout(formData) {
         if (!doctor) {
             throw new Error("Doctor not found");
         }
-        
+
         const paypalEmail = formData.get("paypalEmail")
 
         if (!paypalEmail) {
@@ -39,10 +39,10 @@ export async function requestPayout(formData) {
 
         if (existingPendingPayout) {
             throw new Error(
-              "You already have a pending payout request. Please wait for it to be processed."
+                "You already have a pending payout request. Please wait for it to be processed."
             );
         }
-        
+
         const creditCount = doctor.credits;
 
         if (creditCount === 0) {
@@ -70,10 +70,10 @@ export async function requestPayout(formData) {
         })
 
         revalidatePath("/doctor")
-        return {success: true, payout}
+        return { success: true, payout }
     } catch (error) {
         console.error("Failed to request payout:", error);
-    throw new Error("Failed to request payout: " + error.message);
+        throw new Error("Failed to request payout: " + error.message);
     }
 }
 
@@ -94,7 +94,7 @@ export async function getDoctorPayouts() {
 
         if (!doctor) {
             throw new Error("Doctor not found");
-            
+
         }
 
         const payouts = await db.payout.findMany({
@@ -106,10 +106,10 @@ export async function getDoctorPayouts() {
             }
         })
 
-        return {payouts}
+        return { payouts }
     } catch (error) {
         throw new Error("Failed to fetch payouts: " + error.message);
-    
+
     }
 }
 
@@ -119,7 +119,7 @@ export async function getDoctorEarnings(params) {
     if (!userId) {
         throw new Error("Unauthorized");
     }
-    
+
     try {
         const doctor = await db.user.findUnique({
             where: {
@@ -130,7 +130,7 @@ export async function getDoctorEarnings(params) {
         if (!doctor) {
             throw new Error("Doctor not found");
         }
-        
+
         const completedAppointments = await db.appointment.findMany({
             where: {
                 doctorId: doctor.id,

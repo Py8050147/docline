@@ -155,7 +155,7 @@ exports.Prisma.AppointmentScalarFieldEnum = {
   startTime: 'startTime',
   endTime: 'endTime',
   status: 'status',
-  NOTES: 'NOTES',
+  notes: 'notes',
   patientDescription: 'patientDescription',
   videoSessionId: 'videoSessionId',
   videoSessionToken: 'videoSessionToken',
@@ -228,7 +228,7 @@ exports.AppointmentStatus = exports.$Enums.AppointmentStatus = {
 
 exports.TransactionType = exports.$Enums.TransactionType = {
   CREDIT_PURCHASE: 'CREDIT_PURCHASE',
-  APPOINTMENT_EDUCTION: 'APPOINTMENT_EDUCTION',
+  APPOINTMENT_DEDUCTION: 'APPOINTMENT_DEDUCTION',
   ADMIN_ADJUSTMENT: 'ADMIN_ADJUSTMENT'
 };
 

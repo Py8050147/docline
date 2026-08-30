@@ -158,7 +158,9 @@ export async function deductCreditsForAppointment(userId, doctorId) {
           id: doctor.id,
         },
         data: {
-          increment: APPOINTMENT_CREDIT_COST,
+          credits: {
+            increment: APPOINTMENT_CREDIT_COST,
+          },
         },
       });
 
