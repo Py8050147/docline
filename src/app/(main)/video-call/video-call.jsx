@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Script from "next/script";
 import { Button } from "../../../../@/components/ui/button";
 import { Card, CardContent } from "../../../../@/components/ui/card";
